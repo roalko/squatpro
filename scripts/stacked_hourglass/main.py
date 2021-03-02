@@ -35,14 +35,14 @@ def inference(model_json, model_weights, img, threshold = 0.05, num_stack = 2, n
 
     return frame
 
-model_json = '../../raw_data/trained_models/hg_s2_b1/net_arch.json'
-model_weights = '../../raw_data/trained_models/hg_s2_b1/weights_epoch96.h5'
+model_json = '../../raw_data/hg_s2_b1/net_arch.json'
+model_weights = '../../raw_data/hg_s2_b1/weights_epoch96.h5'
 confidenc_th = 0.0
-input_image = './input/images/squat01.jpg'
+input_image = '../../raw_data/im2.png'
 
 connections = [(0, 1), (1, 2), (2, 6), (3, 6), (3, 4), (4, 5), (6, 7), (7, 8), (8, 9), (8, 12), (12, 11), (11, 10), (8, 13), (13, 14), (14, 15)]
 
 frame = inference(model_json = model_json, model_weights = model_weights, img = input_image)
-cv2.imwrite('output/images/yoga.jpg', frame)
+cv2.imwrite('../../raw_data/out.jpg', frame)
 cv2.imshow('output', frame)
 cv2.waitKey()
