@@ -35,8 +35,8 @@ def inference(model_json, model_weights, img, threshold = 0.05, num_stack = 2, n
 
     return frame
 
-model_json = '../../raw_data/trained_models/hg_s2_b1/net_arch.json'
-model_weights = '../../raw_data/trained_models/hg_s2_b1/weights_epoch96.h5'
+model_json = '../../raw_data/hg_s2_b1/net_arch.json'
+model_weights = '../../raw_data/hg_s2_b1/weights_epoch96.h5'
 confidenc_th = 0.0
 input_image = '../../raw_data/im2.png'
 
