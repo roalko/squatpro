@@ -1,6 +1,11 @@
 import streamlit as st
 import cv2
 import skvideo
+import requests
+from io import StringIO
+import pipeline as pipe
+
+#model_arch = pipe.res_model()
 
 st.title("Welcome to SquatPro!")
 
@@ -13,24 +18,15 @@ st.text("2. Record a video of you squatting from the side")
 st.text("3. Make sure it is five seconds or less!")
 
 
-uploaded_file = st.file_uploader("Upload your file here",type=["MOV", "mp4"])
+uploaded_file = st.file_uploader("Upload your file here",type=["MOV", "mp4","jpg"])
 
 if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
-    file_details = {"FileName":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
-    st.write(file_details)
-    st.video(bytes_data)
 
-    '''in_file = open("bytes_data", "rb") # opening for [r]eading as [b]inary
-                data = in_file.read() # if you only wanted to read 512 bytes, do .read(512)
-                in_file.close()
+    video_bytes = uploaded_file.getvalue()
 
-                out_file = open("out-file", "wb") # open for [w]riting as [b]inary
-                out_file.write(data)
-                out_file.close()'''
+    result = pipe.predict_test(video_bytes)
 
-    def send_vide(bytes_date):
-        return bytes_data
+    st.text(f'{result}')
 
 
 st.text("Still Need Code For Wrong or Right")
