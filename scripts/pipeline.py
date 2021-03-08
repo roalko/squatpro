@@ -14,7 +14,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import keras
 
 
-INPUT_SHAPE = [256, 256, 3]
 
 
 def main():
@@ -26,12 +25,15 @@ def main():
     return args
 
 
+def res_model():
 
-resnet50 = tf.keras.applications.ResNet50(include_top=False, weights='imagenet', input_shape=INPUT_SHAPE)
-resnet50.trainable = False
-feature = resnet50.output
-feature = tf.keras.layers.GlobalAveragePooling2D(name='feature')(feature)
-model_arch = tf.keras.Model(inputs=resnet50.input, outputs=feature)
+    resnet50 = tf.keras.applications.ResNet50(include_top=False, weights='imagenet', input_shape=[256, 256, 3])
+    resnet50.trainable = False
+    feature = resnet50.output
+    feature = tf.keras.layers.GlobalAveragePooling2D(name='feature')(feature)
+    model_arch = tf.keras.Model(inputs=resnet50.input, outputs=feature)
+
+    return model_arch
 
 
 def get_feature_vector(model, input_frame):
@@ -39,14 +41,14 @@ def get_feature_vector(model, input_frame):
     return feature
 
 
-def videos_to_features(model,args):
+def videos_to_features(model,video):
 
     csv_dict = {}
     feature_dim = model.output.shape[1]
-    cap = skvideo.io.vread(args.vid)
+    cap = skvideo.io.vread(video)
 
     for frame in cap:
-        preprocessed_frame = cv2.resize(frame, (INPUT_SHAPE[0], INPUT_SHAPE[1]))
+        preprocessed_frame = cv2.resize(frame, (256, 256))
         preprocessed_frame = np.expand_dims(preprocessed_frame, axis=0)
         preprocessed_frame = tf.keras.applications.resnet.preprocess_input(preprocessed_frame)
         feature = list(get_feature_vector(model, preprocessed_frame)[0])
@@ -62,21 +64,20 @@ def videos_to_features(model,args):
     return df
 
 
+model_arch = res_model()
+my_model = keras.models.load_model('my_model')
+my_model.load_weights("weights.h5")
+
+def predict_test(video):
 
 
-if __name__ == '__main__':
-    args = main()
-
-    X_test = videos_to_features(model_arch,args)
-
-    my_model = keras.models.load_model('my_model')
-    my_model.load_weights("weights.h5")
+    X_test = videos_to_features(model_arch,video)
     X_test = X_test.values
     X_test_dim = np.expand_dims(X_test, axis=0)
     score = my_model.predict(X_test_dim)
 
-    #REMOVE BEFORE DEPLOYEMENT!!!!!!!!
-    print(f'Your Squat Score is {round(score[0][0]*100)}!')
+        #REMOVE BEFORE DEPLOYEMENT!!!!!!!!
+    '''print(f'Your Squat Score is {round(score[0][0]*100)}!')
 
     if score[0][0] < 0.5:
 
@@ -84,5 +85,16 @@ if __name__ == '__main__':
 
     if score[0][0] >= 0.5:
 
-        print('Congratulations, you squat like a PRO!')
+        print('Congratulations, you squat like a PRO!')'''
+
+    return score
+
+
+
+if __name__ == '__main__':
+    args = main()
+
+    predict_test()
+
+
 
