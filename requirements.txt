@@ -34,3 +34,4 @@ argparse
 keras
 scikit-video
 uvicorn
+streamlit

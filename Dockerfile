@@ -5,8 +5,12 @@ COPY squatpro /squatpro
 COPY weights.h5 /weights.h5
 COPY my_model /my_model
 COPY requirements.txt /requirements.txt
-COPY pipeline.py /pipeline.py
 
 RUN pip install -r requirements.txt
 
-CMD uvicorn fast:app --host 0.0.0.0 --port $PORT
+RUN apt-get update && apt-get install -y python3-opencv
+RUN pip install opencv-python
+RUN apt install libgl1-mesa-glx
+
+CMD streamlit run scripts/app.py
+

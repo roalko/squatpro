@@ -12,6 +12,7 @@ from tensorflow.keras import Sequential, layers
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import keras
+import tempfile
 
 
 
@@ -45,7 +46,34 @@ def videos_to_features(model,video):
 
     csv_dict = {}
     feature_dim = model.output.shape[1]
-    cap = skvideo.io.vread(video)
+
+
+    #fp = tempfile.TemporaryFile()
+    #fp.write(video)
+    with tempfile.NamedTemporaryFile(suffix='.mov', prefix='squat_temp_video', dir='/Users/user/code/HyunJongSong/squatpro/scripts', delete=False) as temp:
+
+
+        temp.write(video)
+
+        temp.flush()
+
+
+        '''with tempfile.NamedTemporaryFile() as temp:
+        temp.write(bytes('temp_video', encoding = 'utf-8'))
+        if skvideo.io.vread():
+           temp.seek(0)
+           some_python_function(temp)
+        elif should_call_external_command():
+           temp.flush()
+           subprocess.call(["wc", temp.name])'''
+
+        #with open('user_video.mp4', 'wb') as f:
+
+        #    f.write(video)
+
+
+        cap = skvideo.io.vread(temp.name)
+
 
     for frame in cap:
         preprocessed_frame = cv2.resize(frame, (256, 256))
@@ -60,6 +88,8 @@ def videos_to_features(model,video):
             else:
                 csv_dict[f"feature_{str(i)}"] = [val]
     df = pd.DataFrame(csv_dict)
+
+    temp.close()
 
     return df
 
