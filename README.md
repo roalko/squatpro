@@ -8,7 +8,7 @@
 - Neural Network Models
   - Resnet
   - LSTM
-- Docker, GCP
+- Extensions
 - Contributing
 
 
@@ -55,3 +55,14 @@ A residual neural network (ResNet) is an artificial neural network (ANN) of a ki
 ## LSTM Model
 
 The benefit of using a Long Short Term Memory neural network is that there is an extra element of long term memory, where the neural network has data about the data in prior layers as a 'memory' which allows the model to find the relationships between the data itself and between the data and output.
+
+# Extentions
+
+This model is highly extendable, here are some ideas for improving the project.
+
+1. Getting more data to train the model : We have seen the model improving a lot with the increasing numnber of dataset.
+2. Improving Neural Network Model  : Tuning hyperparameters, Backtesting, Trying different Neural Networks
+
+# Contributing
+
+We are grateful for any suggestions or bug fixes. Hope you enjoy this project!
