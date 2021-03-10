@@ -50,27 +50,12 @@ def videos_to_features(model,video):
 
     #fp = tempfile.TemporaryFile()
     #fp.write(video)
-    with tempfile.NamedTemporaryFile(suffix='.mov', prefix='squat_temp_video', dir='/Users/user/code/HyunJongSong/squatpro/scripts', delete=False) as temp:
+    with tempfile.NamedTemporaryFile(suffix='.mov', prefix='squat_temp_video', dir='/scripts/', delete=False) as temp:
 
 
         temp.write(video)
 
         temp.flush()
-
-
-        '''with tempfile.NamedTemporaryFile() as temp:
-        temp.write(bytes('temp_video', encoding = 'utf-8'))
-        if skvideo.io.vread():
-           temp.seek(0)
-           some_python_function(temp)
-        elif should_call_external_command():
-           temp.flush()
-           subprocess.call(["wc", temp.name])'''
-
-        #with open('user_video.mp4', 'wb') as f:
-
-        #    f.write(video)
-
 
         cap = skvideo.io.vread(temp.name)
 
