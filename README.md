@@ -1,60 +1,30 @@
-# Data analysis
-- Document here the project: squatpro
-- Description: Project Description
-- Data Source:
-- Type of analysis:
+# Contents
 
-Please document the project the better you can.
+- Contents
+- Overview
+- Getting Started
+- Requirements
+- Dataset
+- Neural Network Models
+  - Resnet
+  - LSTM
+- Docker, GCP
+- Contributing
 
-# Startup the project
 
-The initial setup.
+# Overview
 
-Create virtualenv and install the project:
-```bash
-sudo apt-get install virtualenv python-pip python-dev
-deactivate; virtualenv ~/venv ; source ~/venv/bin/activate ;\
-    pip install pip -U; pip install -r requirements.txt
-```
+Project Name : Squatpro
 
-Unittest test:
-```bash
-make clean install test
-```
+Description :  A model to predict a squatting video whether the form is good or not.
 
-Check for squatpro in gitlab.com/{group}.
-If your project is not set please add it:
+Steps:
+- Using resnet(pre-trained model) convert the squatiing video into 2048 features.
+- Generating a model of prediction applying LSTM model.
+- With the saved model, deploy the application via Docker container and Google Cloud Run
 
-- Create a new project on `gitlab.com/{group}/squatpro`
-- Then populate it:
 
-```bash
-##   e.g. if group is "{group}" and project_name is "squatpro"
-git remote add origin git@github.com:{group}/squatpro.git
-git push -u origin master
-git push -u origin --tags
-```
-
-Functionnal test with a script:
-
-```bash
-cd
-mkdir tmp
-cd tmp
-squatpro-run
-```
-
-# Install
-
-Go to `https://github.com/{group}/squatpro` to see the project, manage issues,
-setup you ssh public key, ...
-
-Create a python3 virtualenv and activate it:
-
-```bash
-sudo apt-get install virtualenv python-pip python-dev
-deactivate; virtualenv -ppython3 ~/venv ; source ~/venv/bin/activate
-```
+# Getting Started
 
 Clone the project and install it:
 
@@ -63,12 +33,25 @@ git clone git@github.com:{group}/squatpro.git
 cd squatpro
 pip install -r requirements.txt
 make clean install test                # install and test
+cd scripts
+stremlit app.py
 ```
-Functionnal test with a script:
+It's as simple as that!
 
-```bash
-cd
-mkdir tmp
-cd tmp
-squatpro-run
-```
+# Requirements
+
+For those who want a more details manual, this program is built in Python 3.8. If you are using an earlier version of Python, like Python 3.x, you will run into problems with syntax when it comes to f strings. I do suggest that you update to Python 3.8.
+
+# Dataset
+
+We used 130 videos for train set and 34 for test set. If you want our datasets, please contact us.
+
+# Neural Network Models
+
+## Resnet Model
+
+A residual neural network (ResNet) is an artificial neural network (ANN) of a kind that builds on constructs known from pyramidal cells in the cerebral cortex. Residual neural networks do this by utilizing skip connections, or shortcuts to jump over some layers. Typical ResNet models are implemented with double- or triple- layer skips that contain nonlinearities (ReLU) and batch normalization in between.
+
+## LSTM Model
+
+The benefit of using a Long Short Term Memory neural network is that there is an extra element of long term memory, where the neural network has data about the data in prior layers as a 'memory' which allows the model to find the relationships between the data itself and between the data and output.
