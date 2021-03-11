@@ -50,7 +50,7 @@ def videos_to_features(model,video):
 
     #fp = tempfile.TemporaryFile()
     #fp.write(video)
-    with tempfile.NamedTemporaryFile(suffix='.mov', prefix='squat_temp_video', dir='/scripts/', delete=False) as temp:
+    with tempfile.NamedTemporaryFile(suffix='.mov', prefix='squat_temp_video', dir='', delete=False) as temp:
 
 
         temp.write(video)
